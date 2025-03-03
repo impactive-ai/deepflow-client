@@ -36,10 +36,10 @@ def _print_schema(json_schema):
 
 
 def execute(client: DeepflowClient):
-    from ..command import GetDatasetInfoParam
+    from ..command import GetDatasetListParam
     import json
 
-    command = GetDatasetInfoParam()
+    command = GetDatasetListParam()
 
     resp = client.send(command)
     datasets = resp["datasets"]

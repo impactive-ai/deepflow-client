@@ -19,9 +19,23 @@ class CommitUploadParam(BaseCommand):
 
 
 @dataclass(frozen=True)
-class GetDatasetInfoParam(BaseCommand):
+class GetDatasetListParam(BaseCommand):
     _method = "GET"
-    _action_path = "/dataset-info"
+    _action_path = "/datasets"
 
 
-__all__ = ["RequestUploadParam", "CommitUploadParam", "GetDatasetInfoParam"]
+@dataclass(frozen=True)
+class GetDatasetSchemaParam(BaseCommand):
+    _method = "GET"
+    _action_path = "/datasets/{datasetName}/schema"
+    _path_var_props = ["datasetName"]
+
+    datasetName: str
+
+
+__all__ = [
+    "RequestUploadParam",
+    "CommitUploadParam",
+    "GetDatasetListParam",
+    "GetDatasetSchemaParam",
+]
