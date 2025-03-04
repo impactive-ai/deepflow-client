@@ -1,2 +1,1 @@
-# DEEPFLOW_API_URL = "https://6bdyj13vl2.execute-api.ap-northeast-2.amazonaws.com/prod"
-DEEPFLOW_API_URL = "http://localhost:3010"
+DEEPFLOW_API_URL = "https://0kdowsleh0.execute-api.ap-northeast-2.amazonaws.com/prod"
