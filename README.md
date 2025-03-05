@@ -61,7 +61,7 @@ deepflow dataset-info
 ```
 
 
-### 데이터셋 전송 (WIP)
+### 데이터셋 전송
 
 Deepflow에 고객사의 데이터셋을 전송(업데이트) 처리 합니다.
 
@@ -91,5 +91,7 @@ deepflow dataset-update --dataset item_event --input data.csv
 - Signed URL 에 데이터 전송 처리
 - 데이터 검증 수행
 - 데이터 마이그레이션 수행
+
+전송하는 데이터는 AWS S3 에 저장되며, 높은 가용성과 보안을 제공하는 데이터 저장소 입니다.
 
 데이터 검증 중 에러가 발생하면 마이그레이션이 수행되지 않고 전체 실패 처리 되며 데이터 검증 결과가 자세히 나타납니다.
