@@ -10,8 +10,7 @@ Deepflow 고객사용 API 클라이언트 입니다.
 ## 요구사항
 
 - Python 3.8 이상
-- git
-- 고객사에 발급된 Credentials
+- git (모듈 설치시 필요)
 
 ## 설치방법
 
