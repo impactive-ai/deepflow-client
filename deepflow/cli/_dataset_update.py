@@ -18,13 +18,27 @@ def _csv_to_jsonl(file_path: str):
             yield json.dumps(row) + "\r\n"
 
 
+def _print_validation_error(errors: list[any]):
+    from prettytable import PrettyTable
+
+    table = PrettyTable(["line", "column", "error"])
+    for err in errors:
+        table.add_row([err["line"], err["path"][1:], err["params"]])
+
+    print(table)
+
+
 def execute(
     client: DeepflowClient,
     *,
     dataset: str,
     file_path: str,
 ):
-    from ..command import RequestUploadParam, CommitUploadParam
+    from ..command import (
+        DatasetUpdateStartParam,
+        DatasetUpdateValidateParam,
+        DatasetUpdateCommitParam,
+    )
     import sys
 
     abspath = os.path.abspath(file_path)
@@ -42,7 +56,9 @@ def execute(
         tmp.writelines(_csv_to_jsonl(abspath))
         tmp.flush()
 
-        upload_resp = client.send(RequestUploadParam(datasetName=dataset))
+        upload_resp = client.send(
+            DatasetUpdateStartParam(groupId=client.tenant_id, datasetName=dataset)
+        )
         if upload_resp["_status"] == 500:
             print(f"Dataset does not exist: {dataset}", file=sys.stderr)
             exit(1)
@@ -58,23 +74,25 @@ def execute(
         )
         put_resp.raise_for_status()
 
-    commit_resp = client.send(CommitUploadParam(uploadId=upload_id))
+    validate_resp = client.send(DatasetUpdateValidateParam(uploadId=upload_id))
+    if validate_resp["hasError"]:
+        _print_validation_error(validate_resp["error"]["details"])
+        exit(1)
+
+    commit_resp = client.send(DatasetUpdateCommitParam(uploadId=upload_id))
     if commit_resp["_status"] == 500:
         print(commit_resp, file=sys.stderr)
         exit(1)
 
-    if commit_resp["error"]:
-        print(f"Status=FAILED ({commit_resp['error']})")
+    if commit_resp["hasError"]:
+        print(f"Unknown error: {commit_resp}", file=sys.stderr)
+        exit(1)
 
-        errors = commit_resp["validate"]["errors"]
-        from prettytable import PrettyTable
-
-        table = PrettyTable(["line", "column", "error"])
-        for err in errors:
-            table.add_row([err["line"], err["path"][1:], err["params"]])
-
-        print(table)
-    else:
-        print("Status=SUCCESS")
-        persist_result = commit_resp["persist"]["result"]
-        print(persist_result)
+    print(
+        "RequestId={} Matched={} Updated={} Inserted={}".format(
+            upload_id,
+            commit_resp["matched"],
+            commit_resp["updated"],
+            commit_resp["inserted"],
+        )
+    )

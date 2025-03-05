@@ -22,7 +22,7 @@ def dataset_update(sub_parser):
         type=str,
         required=True,
     )
-    parser.add_argument("--input", type=str, required=True, dest="file_path")
+    parser.add_argument("--input", "-i", type=str, required=True, dest="file_path")
 
 
 def build_argparse():

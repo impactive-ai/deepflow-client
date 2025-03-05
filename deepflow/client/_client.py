@@ -10,6 +10,10 @@ class DeepflowClient:
         self._api_key = api_key
         self._tenant_id = tenant_id
 
+    @property
+    def tenant_id(self):
+        return self._tenant_id
+
     def try_auth(self):
         import requests
         from .._consts import DEEPFLOW_API_URL

@@ -1,6 +1,6 @@
 [project]
 name = "deepflow-client"
-version = "0.9.1"
+version = "0.10.0"
 dependencies = [
     "requests==2.32.3",
     "prettytable==3.14.0",
