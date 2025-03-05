@@ -28,8 +28,11 @@ def dataset_update(sub_parser):
 def build_argparse():
     import argparse
     from ..util import EnvDefault
+    from ..version import VERSION
 
     parser = argparse.ArgumentParser(prog="deepflow", description="Deepflow API Client")
+    parser.add_argument("--version", action="version", version=f"deepflow {VERSION}")
+
     parser.add_argument(
         "--tenant-id",
         type=str,

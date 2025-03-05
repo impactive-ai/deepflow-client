@@ -1,11 +1,13 @@
 [project]
 name = "deepflow-client"
-version = "0.10.0"
 dependencies = [
     "requests==2.32.3",
-    "prettytable==3.14.0",
-    "jsonschema==4.23.0"
+    "prettytable==3.14.0"
 ]
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "deepflow.version.VERSION"}
 
 [tool.setuptools.packages.find]
 include = ["deepflow*"]
