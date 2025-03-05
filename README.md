@@ -20,12 +20,12 @@ pip install git+https://github.com/impactive-ai/deepflow-client.git
 
 ## 사용 방법
 
-정상적으로 설치되면 `dpanda` 명령으로 작업을 수행할 수 있습니다.
+정상적으로 설치되면 `deepflow` 명령으로 작업을 수행할 수 있습니다.
 
 ```shell
-dpanda
-dpanda -h
-dpanda --version
+deepflow
+deepflow -h
+deepflow --version
 ```
 
 `-h` 스위치로 커맨드에 대한 도움말을 언제든지 열람하실 수 있습니다.
