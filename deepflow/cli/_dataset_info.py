@@ -17,10 +17,14 @@ def _print_schema(json_schema):
     required_fields = set(json_schema["required"])
     props = json_schema["properties"]
 
-    table = PrettyTable(["Column", "Required", "Type", "Format", "Description"])
+    table = PrettyTable(["Column", "Type", "Nullable", "Format", "Description"])
     for col, type_spec in props.items():
         type_format = type_spec.get("format", "")
         description = type_spec.get("description", "")
+        types = type_spec.get("type", "")
+        nullable = "null" in types
+        if isinstance(types, list):
+            types.remove("null")
 
         if type_format == "date":
             type_format = "yyyy-MM-dd"
@@ -28,8 +32,8 @@ def _print_schema(json_schema):
         table.add_row(
             [
                 col,
-                "*" if col in required_fields else "",
-                type_spec.get("type", ""),
+                types if isinstance(types, str) else ",".join(types),
+                "Y" if nullable else "",
                 type_format,
                 description,
             ]
