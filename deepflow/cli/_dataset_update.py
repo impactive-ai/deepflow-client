@@ -60,6 +60,7 @@ def execute(
             DatasetUpdateStartParam(groupId=client.tenant_id, datasetName=dataset)
         )
         if upload_resp["_status"] == 500:
+            print(upload_resp)
             print(f"Dataset does not exist: {dataset}", file=sys.stderr)
             exit(1)
 
