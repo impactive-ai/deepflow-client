@@ -12,7 +12,7 @@ def _csv_to_jsonl(file_path: str):
     import csv
     import json
 
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             yield json.dumps(row) + "\r\n"
@@ -60,6 +60,7 @@ def execute(
             DatasetUpdateStartParam(groupId=client.tenant_id, datasetName=dataset)
         )
         if upload_resp["_status"] == 500:
+            print(upload_resp)
             print(f"Dataset does not exist: {dataset}", file=sys.stderr)
             exit(1)
 
