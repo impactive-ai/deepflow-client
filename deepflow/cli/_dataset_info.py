@@ -55,7 +55,7 @@ def execute(client: DeepflowClient):
 
     print("\n# Schemas")
     for row in resp["datasets"]:
-        json_schema = json.loads(row["jsonSchema"])
+        json_schema = row["jsonSchema"]
         name = row["name"]
         print(f"\n## {name}")
         _print_schema(json_schema)
