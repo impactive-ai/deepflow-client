@@ -15,7 +15,7 @@ Deepflow 고객사용 API 클라이언트 입니다.
 ## 설치방법
 
 ```shell
-pip install git+https://github.com/impactive-ai/deepflow-client.git 
+pip install git+https://github.com/impactive-ai/deepflow-client.git --upgrade
 ```
 
 ## 사용 방법
