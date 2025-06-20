@@ -13,21 +13,26 @@ def cli():
 
     from ..client import DeepflowClient
 
-    client = DeepflowClient(api_key=args.api_key, tenant_id=args.tenant_id)
+    client = DeepflowClient(api_key=args.api_key)
 
     param = dict(**vars(args))
     del param["command"]
     del param["api_key"]
-    del param["tenant_id"]
 
-    if args.command == "dataset-info":
-        from ._dataset_info import execute
-
-        execute(client)
-    elif args.command == "dataset-update":
-        from ._dataset_update import execute
+    if args.command == "dataset":
+        from ._dataset import execute
 
         execute(client, **param)
+    elif args.command == "dataset-persist":
+        from ._dataset_persist import execute
+
+        execute(client, **param)
+    elif args.command == "dataset-update":
+        print(
+            "데이터셋 저장 커맨드가 변경되었습니다. dataset-persist 를 사용하십시오.",
+            file=sys.stderr,
+        )
+        exit(1)
     else:
         print("Unknown command", file=sys.stderr)
         exit(1)

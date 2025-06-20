@@ -11,18 +11,24 @@ def _date_type(s):
         sys.exit(1)
 
 
-def dataset_info(sub_parser):
-    sub_parser.add_parser("dataset-info")
+def dataset(sub_parser):
+    parser = sub_parser.add_parser("dataset")
+    parser.description = "데이터셋 목록 및 상세 정보를 조회합니다."
+    parser.add_argument("dataset_name", nargs="?", type=str, default="")
+
+
+def dataset_persist(sub_parser):
+    parser = sub_parser.add_parser("dataset-persist")
+    parser.description = "데이터를 전송 합니다."
+    parser.add_argument(
+        "dataset",
+        type=str,
+    )
+    parser.add_argument("--input", "-i", type=str, required=True, dest="file_path")
 
 
 def dataset_update(sub_parser):
     parser = sub_parser.add_parser("dataset-update")
-    parser.add_argument(
-        "--dataset",
-        type=str,
-        required=True,
-    )
-    parser.add_argument("--input", "-i", type=str, required=True, dest="file_path")
 
 
 def build_argparse():
@@ -34,12 +40,6 @@ def build_argparse():
     parser.add_argument("--version", action="version", version=f"deepflow {VERSION}")
 
     parser.add_argument(
-        "--tenant-id",
-        type=str,
-        action=EnvDefault,
-        envvar="DEEPFLOW_TENANT_ID",
-    )
-    parser.add_argument(
         "--api-key",
         type=str,
         action=EnvDefault,
@@ -47,7 +47,8 @@ def build_argparse():
     )
 
     sub_parsers = parser.add_subparsers(dest="command")
-    dataset_info(sub_parsers)
+    dataset(sub_parsers)
+    dataset_persist(sub_parsers)
     dataset_update(sub_parsers)
 
     return parser
