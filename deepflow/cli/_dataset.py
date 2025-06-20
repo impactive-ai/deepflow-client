@@ -49,14 +49,15 @@ def _print_partition(partition_info):
     from prettytable import PrettyTable
 
     table = PrettyTable(
-        ["Partition Key", "Data count", "Replace count", "Last updated at"]
+        ["Partition Key", "Data count", "Replace count", "Last updated at (UTC)"]
     )
     for c in partition_info:
         pkey = c.get("pkey")
         data_count = c.get("dataCount")
         replace_count = c.get("replaceCount")
+        updated_at = c.get("updatedAt")
 
-        table.add_row([pkey, data_count, replace_count, ""])
+        table.add_row([pkey, data_count, replace_count, updated_at])
     print(table)
 
 
