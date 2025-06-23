@@ -38,8 +38,7 @@ deepflow --version
 방법1. 파라메터로 입력
 
 ```shell
-deepflow --api-key {tenantId} \
-  dataset-info
+deepflow --api-key {tenantId} dataset
 ```
 
 방법2. 환경변수로 등록하여 사용
@@ -49,8 +48,7 @@ deepflow --api-key {tenantId} \
 
 ```shell
 export DEEPFLOW_API_KEY={apiKey}
-
-deepflow dataset-info
+deepflow dataset
 ```
 
 ## Migration guide from 0.xx to version 1.0
